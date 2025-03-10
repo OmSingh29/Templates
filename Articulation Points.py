@@ -8,21 +8,6 @@ from sys import stdin,stdout
 input=lambda:stdin.readline().rstrip()
 print=lambda *x,sep=' ',end='\n':stdout.write(sep.join(map(str,x))+end)
 
-def out(l):
-    print(' '.join(map(str,l)))
-
-def yes():
-    print('Yes')
-
-def no():
-    print('No')
-
-def alice():
-    print('Alice')
-
-def bob():
-    print('Bob')
-
 from types import GeneratorType
 def bootstrap(f, stack=[]):
     def wrappedfunc(*args, **kwargs):
@@ -42,18 +27,31 @@ def bootstrap(f, stack=[]):
             return to
     return wrappedfunc
 
+def out(l):
+    print(' '.join(map(str,l)))
+
+def yes():
+    print('Yes')
+
+def no():
+    print('No')
+
+def alice():
+    print('Alice')
+
+def bob():
+    print('Bob')
+
 @bootstrap
 def articulation_point(cnt,par,grand_par=0):
-    #a is the root node for traversal (a>0)
-    v_a[par-1]=1
+    vis[par]=1
     min_step[par]=cnt
     tin[par]=cnt
     ch=0
-    #tra.append(a)
-    for i,child in enumerate(adj_list[par-1]):
+    for child in adj[par]:
         if child==grand_par:
             continue
-        if not v_a[child-1]:
+        if not vis[child]:
             yield articulation_point(cnt+1,child,par)
             min_step[par]=min(min_step[par],min_step[child])
             if grand_par and min_step[child]>=tin[par]:
@@ -66,17 +64,17 @@ def articulation_point(cnt,par,grand_par=0):
     yield
 
 def solve():
-    global adj_list,v_a,tin,min_step,art
+    global adj,vis,tin,min_step,art
     v,e=map(int,input().split())
-    v_a=[0]*v
+    vis=[0]*(v+1)
     art=[0]*(v+1)
     min_step=[0]*(v+1)
     tin=[0]*(v+1)
-    adj_list=[[] for i in range(v)]
+    adj=[[] for i in range(v+1)]
     for i in range(e):
         x,y=map(int,input().split())
-        adj_list[x-1].append(y)
-        adj_list[y-1].append(x)
+        adj[x].append(y)
+        adj[y].append(x)
     articulation_point(1,1)
     print(art)
         
