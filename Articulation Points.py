@@ -8,6 +8,21 @@ from sys import stdin,stdout
 input=lambda:stdin.readline().rstrip()
 print=lambda *x,sep=' ',end='\n':stdout.write(sep.join(map(str,x))+end)
 
+def out(l):
+    print(' '.join(map(str,l)))
+
+def yes():
+    print('Yes')
+
+def no():
+    print('No')
+
+def alice():
+    print('Alice')
+
+def bob():
+    print('Bob')
+
 from types import GeneratorType
 def bootstrap(f, stack=[]):
     def wrappedfunc(*args, **kwargs):
@@ -26,21 +41,6 @@ def bootstrap(f, stack=[]):
                     to = stack[-1].send(to)
             return to
     return wrappedfunc
-
-def out(l):
-    print(' '.join(map(str,l)))
-
-def yes():
-    print('Yes')
-
-def no():
-    print('No')
-
-def alice():
-    print('Alice')
-
-def bob():
-    print('Bob')
 
 @bootstrap
 def articulation_point(cnt,par,grand_par=0):
