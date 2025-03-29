@@ -14,7 +14,7 @@ Properties of a Centroid Tree:
    paths from this set.  
 '''
 
-class CentroidDecomposition():
+class CentroidDecomposition:
 
     def __init__(self,n):
         self.n=n
